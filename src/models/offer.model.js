@@ -8,7 +8,7 @@ function iriFromId(id) {
 }
 
 export const OfferModel = {
-  async findAll(limit = 20, offset = 0) {
+  async findAll(limit = 200, offset = 0) {
     const q = `
       ${PREFIXES}
       SELECT ?id ?titulo ?descripcion ?experiencia ?modalidad ?aptitud

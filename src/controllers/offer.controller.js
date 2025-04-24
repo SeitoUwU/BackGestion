@@ -2,7 +2,7 @@ import { OfferModel } from "../models/offer.model.js";
 
 export const getOffers = async (req, res, next) => {
   try {
-    const { limit = 20, offset = 0 } = req.query;
+    const { limit = 200, offset = 0 } = req.query;
     const data = await OfferModel.findAll(Number(limit), Number(offset));
     res.json(data);
   } catch (err) {
