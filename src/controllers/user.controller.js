@@ -14,3 +14,13 @@ export const loginUser = async (req, res, next) => {
         next(error)
     }
 };
+
+export const registerUser = async (req, res, next) => {
+    try {
+        const { UserData } = req.body
+        const newUser = await UserModel.registerUser(UserData)
+        res.status(201).json(newUser);
+    } catch (error) {
+        next(error)
+    }
+};
