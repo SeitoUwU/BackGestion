@@ -4,6 +4,7 @@ import cors from "cors";
 import "dotenv/config";
 
 import { errorHandler } from "./src/middlewares/errorHandler.js";
+import db from './src/models/index.js'
 import offerRoutes from "./src/routes/offer.routes.js";
 import userRouters from "./src/routes/user.routes.js"
 import skillRoutes from "./src/routes/skill.routes.js"
@@ -25,6 +26,14 @@ app.use("/api/mode", modeRoutes)
 
 app.use((_req, res) => res.status(404).json({ message: "No encontrado" }));
 app.use(errorHandler);
+
+try {
+  await db.sequelize.sync({ force: false });
+  console.log('Modelos sincronizados')
+} catch (error) {
+  console.error('Error de conexion a ala base de datos: ', error);
+  process.exit(1);
+}
 
 app.listen(PORT, () =>
   console.log(`API levantada en http://localhost:${PORT}`)
