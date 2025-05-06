@@ -2,25 +2,22 @@ import { DataTypes } from "sequelize";
 
 export const UserModel = (sequelize) => {
   return sequelize.define('User', {
-    idUsuario: {
+    id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true
     },
-    cedulaUsuario: DataTypes.STRING,
-    nombreUsuario: DataTypes.STRING,
-    correoUsuario: {
+    email: {
       type: DataTypes.STRING,
       unique: true
     },
-    contraseniaUsuario: DataTypes.STRING,
-    numeroUsuario: DataTypes.STRING,
-    rolUsuario: {
-      type: DataTypes.STRING,
-      defaultValue: 'usuario'
+    password: DataTypes.STRING,
+    fkrol: {
+      type: DataTypes.INTEGER,
+      defaultValue: 2
     }
   }, {
     timestamps: false,
-    tableName: 'usuarios'
+    tableName: 'users'
   });
 };
