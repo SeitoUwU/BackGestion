@@ -3,6 +3,6 @@ import { getAll } from "../controllers/mode.controller.js";
 
 const router = Router();
 
-router.get("/", getAll);
+// router.get("/", getAll);
 
 export default router;

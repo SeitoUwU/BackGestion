@@ -1,6 +1,5 @@
-import db from '../models/index.js';
-import { UserModel } from './user.model.js';
-import jwt from 'jsonwebtoken';
+import db from "../models/index.js";
+import jwt from "jsonwebtoken";
 
 export const loginUser = async (req, res, next) => {
   try {
@@ -19,7 +18,7 @@ export const loginUser = async (req, res, next) => {
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
-    res.json({ token }); 
+    res.json({ token });
   } catch (error) {
     next(error);
   }
@@ -27,8 +26,14 @@ export const loginUser = async (req, res, next) => {
 
 export const registerUser = async (req, res, next) => {
   try {
-    const { email, password, user } = req.body;
-    const newUser = await UserModel.registerUser(UserData);
+    const { email, password, name, phone, idCard } = req.body;
+    const newUser = await db.User.registerUser(
+      email,
+      password,
+      name,
+      phone,
+      idCard
+    );
     res.status(201).json(newUser);
   } catch (error) {
     next(error);

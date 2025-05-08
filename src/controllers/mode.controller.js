@@ -1,8 +1,11 @@
-import { ModeModel } from "../models/mode.model";
+import { ModeModel } from "../models/mode.model.js";
 
-export const ModeController = {
-  async getAll(req, res) {
+export const getAll = async (req, res) => {
+  try {
     const modes = await ModeModel.findAll();
     res.json(modes);
-  },
-}
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error al obtener los modos" });
+  }
+};

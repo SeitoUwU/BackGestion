@@ -9,7 +9,7 @@ import offerRoutes from "./src/routes/offer.routes.js";
 import userRouters from "./src/routes/user.routes.js"
 import skillRoutes from "./src/routes/skill.routes.js"
 import companyRoutes from "./src/routes/company.routes.js"
-import modeRoutes from "./src/routes/user.routes.js"
+import modeRoutes from "./src/routes/mode.routes.js"
 
 const app = express();
 const PORT = process.env.PORT || 3000;

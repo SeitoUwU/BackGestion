@@ -7,29 +7,33 @@ function iriFromId(id) {
 }
 
 export const UserModel = (sequelize) => {
-  const model = sequelize.define('User', {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
+  const model = sequelize.define(
+    "User",
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      email: {
+        type: DataTypes.STRING,
+        unique: true,
+      },
+      password: DataTypes.STRING,
+      fkrol: {
+        type: DataTypes.INTEGER,
+        defaultValue: 2,
+      },
     },
-    email: {
-      type: DataTypes.STRING,
-      unique: true
-    },
-    password: DataTypes.STRING,
-    fkrol: {
-      type: DataTypes.INTEGER,
-      defaultValue: 2
+    {
+      timestamps: false,
+      tableName: "users",
     }
-  }, {
-    timestamps: false,
-    tableName: 'users'
-  });
+  );
 
-  model.registerUser = async (userData) => {
+  model.registerUser = async (email, password, name, phone, idCard) => {
     // Crear en MySQL
-    const createdUser = await model.create(userData);
+    const createdUser = await model.create({ email, password });
 
     // Insertar en ontología
     const subj = `<${iriFromId(createdUser.id)}>`;
@@ -38,13 +42,12 @@ export const UserModel = (sequelize) => {
       INSERT DATA {
         ${subj} a ${NS}:Usuario ;
           ${NS}:idUsuario ${createdUser.id} ;
-          ${NS}:correoUsuario "${createdUser.email}" ;
-          ${NS}:contraseniaUsuario "${createdUser.password}" ;
-          ${NS}:rolUsuario "${createdUser.fkrol}" .
+          ${NS}:nombreUsuario "${name}" ;
+          ${NS}:numeroUsuario "${phone}" ;
+          ${NS}:cedulaUsuario "${idCard}" .
       }
     `;
     await update(q);
-
-    return createdUser;
   };
+  return model;
 };
