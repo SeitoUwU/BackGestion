@@ -32,10 +32,9 @@ export const UserModel = (sequelize) => {
   );
 
   model.registerUser = async (email, password, name, phone, idCard) => {
-    // Crear en MySQL
+    
     const createdUser = await model.create({ email, password });
 
-    // Insertar en ontología
     const subj = `<${iriFromId(createdUser.id)}>`;
     const q = `
       ${PREFIXES}
@@ -49,5 +48,6 @@ export const UserModel = (sequelize) => {
     `;
     await update(q);
   };
+
   return model;
 };
